@@ -1,22 +1,18 @@
+
+@import url("https://justehcupcake.github.io/PS5_Display_Pics/PS5_Black.css");
+
+/* Fondo transparente para OBS */
 body {
     background: transparent !important;
     margin: 0;
     overflow: hidden;
 }
 
-/* Mantener la apariencia original del mando PS5 */
-.controller.ds5 {
-    filter: none !important;
-}
-
-/* Personalizar el panel táctil con tu logo */
-.ds5 .touchpad {
+/* Logo en el panel central del mando */
+.ds4 .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
     background-color: #050505 !important;
-    background-size: 55% !important;
+    background-size: 55% auto !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    border: 1px solid #fff !important;
-}
-    opacity: 0.65 !important;
 }
