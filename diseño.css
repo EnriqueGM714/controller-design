@@ -1,102 +1,22 @@
-
-/* =========================================
-   SCUF OMEGA - PS5 BLACK CUSTOM DESIGN
-   Carcasa oscura, botones claros y logo
-   ========================================= */
-
-/* Fondo transparente para OBS */
-html,
 body {
     background: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
+    margin: 0;
+    overflow: hidden;
 }
 
-/* -----------------------------------------
-   CARCASA: NEGRO PROFUNDO
-   Compatibilidad con selectores PS5 y DS4
-   ----------------------------------------- */
-
-.controller.ds5,
-.controller.ds4 {
-    filter: grayscale(100%) brightness(50%) !important;
+/* Mantener la apariencia original del mando PS5 */
+.controller.ds5 {
+    filter: none !important;
 }
 
-/* Mantener los elementos del mando visibles */
-.controller.ds5 *,
-.controller.ds4 * {
-    transition: none !important;
-}
-
-/* -----------------------------------------
-   PANEL TÁCTIL: NEGRO CON TU LOGO
-   ----------------------------------------- */
-
-.ds5 .touchpad,
-.ds4 .touchpad {
-    background-color: #050505 !important;
+/* Personalizar el panel táctil con tu logo */
+.ds5 .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
+    background-color: #050505 !important;
     background-size: 55% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    border: 1px solid #ffffff !important;
+    border: 1px solid #fff !important;
 }
-
-/* -----------------------------------------
-   BOTONES: BLANCO BRILLANTE
-   ----------------------------------------- */
-
-.ds5 .buttons,
-.ds5 .dpad,
-.ds5 .button,
-.ds5 .trigger,
-.ds5 .bumper,
-.ds5 .face,
-.ds4 .buttons,
-.ds4 .dpad,
-.ds4 .button,
-.ds4 .trigger,
-.ds4 .bumper,
-.ds4 .face {
-    filter: grayscale(100%) brightness(280%) contrast(150%) !important;
-}
-
-/* -----------------------------------------
-   JOYSTICKS: OSCUROS
-   ----------------------------------------- */
-
-.ds5 .stick,
-.ds4 .stick {
-    filter: grayscale(100%) brightness(30%) !important;
-}
-
-/* -----------------------------------------
-   GATILLOS Y BOTONES SUPERIORES
-   ----------------------------------------- */
-
-.ds5 .triggers,
-.ds5 .bumpers,
-.ds4 .triggers,
-.ds4 .bumpers {
-    filter: grayscale(100%) brightness(180%) !important;
-}
-
-/* -----------------------------------------
-   BOTÓN CENTRAL / HOME
-   ----------------------------------------- */
-
-.ds5 .meta,
-.ds4 .meta {
-    filter: grayscale(100%) brightness(180%) !important;
-}
-
-/* -----------------------------------------
-   TRANSPARENCIA DE ELEMENTOS NO ACTIVOS
-   No se ocultan los botones ni sus posiciones.
-   ----------------------------------------- */
-
-.ds5.disconnected,
-.ds4.disconnected {
     opacity: 0.65 !important;
 }
