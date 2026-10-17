@@ -6,13 +6,13 @@ body {
     overflow: hidden;
 }
 
-/* Oscurece ligeramente la carcasa negra del mando */
-.controller {
+/* Oscurece la carcasa del mando */
+.controller.ds4 {
     filter: grayscale(100%) brightness(65%) !important;
 }
 
-/* Reemplaza el panel táctil con el logo del rayo y le añade el borde blanco */
-.controller .touchpad {
+/* Aplica el panel táctil con el rayo y borde blanco */
+.controller.ds4 .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
     background-color: #050505 !important;
     background-size: contain !important;
@@ -23,18 +23,18 @@ body {
     box-sizing: border-box !important;
 }
 
-/* Convierte a blanco puro los botones de acción, la cruceta (.face/.dpad), los gatillos, los bumpers (L1/R1) y los botones de menú (Create/Options) */
-.controller .button,
-.controller .face,
-.controller .dpad,
-.controller .trigger,
-.controller .bumper,
-.controller .back,
-.controller .start {
+/* Fuerza el color blanco puro en todos los botones, cruceta y menú */
+.controller.ds4 .button,
+.controller.ds4 .face,
+.controller.ds4 .dpad,
+.controller.ds4 .trigger,
+.controller.ds4 .bumper,
+.controller.ds4 .back,
+.controller.ds4 .start {
     filter: brightness(0) invert(1) !important;
 }
 
-/* Mantiene los joysticks (L3/R3) oscuros para que destaquen sobre la carcasa */
-.controller .stick {
+/* Mantiene los joysticks oscuros */
+.controller.ds4 .stick {
     filter: grayscale(100%) brightness(35%) !important;
 }
