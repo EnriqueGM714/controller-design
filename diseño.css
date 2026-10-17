@@ -6,40 +6,55 @@ body {
     overflow: hidden;
 }
 
-/* Oscurece la carcasa del mando */
-.controller.ds4 {
+/* Oscurecemos la carcasa general del mando de fondo */
+.controller {
     filter: grayscale(100%) brightness(65%) !important;
 }
 
-/* Ajusta el panel táctil a la medida real, añade borde y borra el fondo negro del JPG */
-.controller.ds4 .touchpad {
-    width: 250px !important;
-    height: 140px !important;
-    left: 285px !important; /* Ajuste para centrar en el chasis de PS5 */
-    top: 75px !important;
+/* 
+ * ARREGLO DEL PANEL TÁCTIL (Touchpad)
+ * Al quitarle las coordenadas fijas (left/top/width/height), vuelve a su sitio natural de PS5.
+ * Usamos mix-blend-mode: screen para borrar el cuadro negro y dejar el rayo visible.
+ */
+.controller .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-color: black !important; /* Base negra para que funcione el borde y el blend */
-    background-size: 80px !important; /* Tamaño del rayo */
+    background-color: #000000 !important; /* Base negra obligatoria para que el 'screen' borre el fondo */
+    background-size: 80px !important;     /* Tamaño ajustado del rayo de tormenta */
     background-position: center !important;
     background-repeat: no-repeat !important;
-    mix-blend-mode: screen !important; /* Esto hace transparente el cuadro negro del JPG */
-    border: 3px solid white !important;
+    mix-blend-mode: screen !important;    /* Vuelve transparente el fondo del JPG */
+    
+    /* Creamos el borde blanco al ras de la propia forma de PS5 sin descolocarlo */
+    border: 3px solid #ffffff !important;
     border-radius: 12px !important;
+    box-sizing: border-box !important;
 }
 
-/* Fuerza el blanco puro en botones y cruceta usando brillo al máximo */
-.controller.ds4 .button,
-.controller.ds4 .face,
-.controller.ds4 .dpad,
-.controller.ds4 .trigger,
-.controller.ds4 .bumper,
-.controller.ds4 .back,
-.controller.ds4 .start {
-    filter: brightness(0) invert(1) brightness(200%) !important;
-    opacity: 1 !important; 
+/* 
+ * BOTONES BLANCOS DE ALTO CONTRASTE Y SÍMBOLOS VISIBLES
+ * Aplicamos aislamiento de filtros para que no queden grises o borrosos.
+ */
+.controller .button,
+.controller .face,
+.controller .dpad,
+.controller .trigger,
+.controller .bumper,
+.controller .back,
+.controller .start,
+.controller .meta {
+    /* brightness(0) los hace negros, invert(1) los pasa a blanco puro respetando bordes e interiores */
+    filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
 }
 
-/* Mantiene los joysticks oscuros */
-.controller.ds4 .stick {
-    filter: grayscale(100%) brightness(35%) !important;
+/* Fuerza que los pequeños símbolos o texturas dentro de los botones de PS5 mantengan su visibilidad */
+.controller .button *,
+.controller .face * {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Joysticks oscuros tradicionales */
+.controller .stick {
+    filter: grayscale(100%) brightness(30%) !important;
 }
