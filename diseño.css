@@ -1,35 +1,203 @@
+/* BEGIN PS5 Controller Styling (Estilo Dark & White) */
 
-@import url("https://justehcupcake.github.io/PS5_Display_Pics/PS5_Black.css");
-
-body {
-    background: transparent !important;
-    margin: 0;
-    overflow: hidden;
+/* Cambiamos la clase base a ds5 para el mando de PS5 */
+.controller.ds5 {
+    background: url(PS5_Black_SkinNo_Buttons.png) no-repeat center;
+    background-size: contain;
+    height: 700px;
+    width: 1200px;
 }
 
-/* Carcasa negra */
-.controller.ds4 {
-    filter: grayscale(100%) brightness(65%) !important;
+.ds5.disconnected div {
+    display: none;
 }
 
-.controller.ds4 .touchpad {
-    background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-color: #050505 !important;
-    background-size: 18% auto !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    border: none !important;
+/* Gatillos (Triggers) adaptados a PS5 */
+.ds5 .triggers {
+    width: 598px;
+    height: 90px;
+    position: absolute;
+    left: 299px;
+    top: 38px;
 }
 
-/* Botones y cruceta */
-.controller.ds4 .button,
-.controller.ds4 .dpad,
-.controller.ds4 .trigger,
-.controller.ds4 .bumper {
-    filter: grayscale(100%) brightness(180%) contrast(120%);
+.ds5 .trigger {
+    width: 99px;
+    height: 100%;
+    background: url(Trigger_Pressed.png);
+    opacity: 0;
+    /* Filtro para volver el gatillo blanco al pulsarlo */
+    filter: brightness(0) invert(1);
 }
 
-/* Joysticks oscuros */
-.controller.ds4 .stick {
-    filter: grayscale(100%) brightness(35%);
+.ds5 .trigger.left {
+    float: left;
 }
+
+.ds5 .trigger.right {
+    float: right;
+    background-position-x: 99px;
+}
+
+/* Bumpers (L1/R1) */
+.ds5 .bumper {
+    width: 200px;
+    height: 45px;
+    background: url(Bumper.png) no-repeat;
+    opacity: 0;
+    filter: brightness(0) invert(1);
+}
+
+.ds5 .bumpers {
+    position: absolute;
+    width: 672px;
+    height: 23px;
+    left: 263px;
+    top: 132px;
+}
+
+.ds5 .bumper.pressed {
+    opacity: 0.8;
+}
+
+.ds5 .bumper.left {
+    float: left;
+}
+
+.ds5 .bumper.right {
+    float: right;
+    transform: rotateY(180deg);
+}
+
+/* Touchpad con borde blanco brillante y centrado */
+.ds5 .touchpad {
+    width: 350px;
+    height: 250px; /* Altura ajustada a la proporción del PS5 */
+    position: absolute;
+    left: 422px;
+    top: 74px;
+    border-radius: 15px;
+    border: 3px solid transparent; 
+    transition: all 0.2s ease;
+}
+
+/* Añadimos el borde blanco y el rayo al pulsar */
+.ds5 .touchpad.pressed {
+    border: 5px solid white;
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+    background: url(Lightning_Icon.png) no-repeat center center;
+    background-size: 80px;
+}
+
+/* Botones de menú (Create / Options en PS5) */
+.ds5 .arrows {
+    position: absolute;
+    width: 352px;
+    height: 46px;
+    top: 142px;
+    left: 227px;
+}
+
+.ds5 .back, .ds5 .start {
+    background: url(Select.png);
+    width: 26px;
+    height: 43px;
+    opacity: 0;
+    filter: brightness(0) invert(1); /* Vuelve los botones blancos */
+}
+
+.ds5 .start {
+    position: absolute;
+    left: 560px; /* Ajuste para PS5 */
+    top: 30px;
+}
+
+.ds5 .back {
+    position: absolute;
+    left: 140px; /* Ajuste para PS5 */
+    top: 30px;
+}
+
+.ds5 .back.pressed, .ds5 .start.pressed {
+    opacity: 1;
+}
+
+/* Botones de acción (Triángulo, Círculo, Equis, Cuadrado) */
+.ds5 .abxy {
+    position: absolute;
+    width: 170px;
+    height: 171px;
+    top: 200px;
+    left: 780px; /* Ligeramente desplazado para el chasis de PS5 */
+}
+
+.ds5 .button {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: url(FaceButtons.png);
+    /* Forzamos que los íconos de los botones sean completamente blancos */
+    filter: brightness(0) invert(1); 
+}
+
+.ds5 .button.pressed {
+    background-position-y: 55px;
+    transform: scale(0.95); /* Pequeño efecto al pulsar */
+}
+
+.ds5 .a { background-position: 0 0; bottom: 0px; left: 58px; }
+.ds5 .b { background-position: -57px 0; top: 57px; right: -3px; }
+.ds5 .x { background-position: -113px 0; top: 57px; }
+.ds5 .y { background-position: 55px 0; left: 58px; bottom: 119px; }
+
+/* Joysticks */
+.ds5 .sticks {
+    position: absolute;
+    width: 380px;
+    height: 105px;
+    top: 380px; /* Posición ajustada para PS5 */
+    left: 410px;
+}
+
+.ds5 .stick {
+    position: absolute;
+    background: url(Sticks.png);
+    height: 94px;
+    width: 94px;
+    border-radius: 50%;
+}
+
+.ds5 .stick.pressed.left { background-position-x: -96px; }
+.ds5 .stick.pressed.right { background-position-x: -192px; }
+
+.ds5 .stick.left { top: 0; left: 0; }
+.ds5 .stick.right { top: calc(100% - 105px); left: calc(100% - 105px); }
+
+/* Cruceta (D-pad) con relleno blanco intenso */
+.ds5 .dpad {
+    position: absolute;
+    width: 125px;
+    height: 126px;
+    top: 220px;
+    left: 275px; /* Ajuste para PS5 */
+}
+
+.ds5 .face {
+    background: url(Dpad.png);
+    position: absolute;
+    filter: brightness(0) invert(1); /* Aplica el color blanco puro de tu imagen */
+}
+
+.ds5 .face.up, .ds5 .face.down { width: 37px; height: 52px; }
+.ds5 .face.left, .ds5 .face.right { width: 52px; height: 40px; }
+
+.ds5 .face.up { left: 44px; top: 0; background-position: -37px 0px; }
+.ds5 .face.down { left: 44px; bottom: 0; background-position: 0px 0; }
+.ds5 .face.left { top: 45px; left: 0; background-position: 104px 0; }
+.ds5 .face.right { top: 45px; right: 0px; background-position: 52px 0; }
+
+.ds5 .face.pressed {
+    background-position-y: 52px;
+}
+
+/* END PS5 Controller Styling */
