@@ -1,18 +1,35 @@
 
 @import url("https://justehcupcake.github.io/PS5_Display_Pics/PS5_Black.css");
 
-/* Fondo transparente para OBS */
 body {
     background: transparent !important;
     margin: 0;
     overflow: hidden;
 }
 
-/* Logo en el panel central del mando */
-.ds4 .touchpad {
+/* Carcasa negra */
+.controller.ds4 {
+    filter: grayscale(100%) brightness(65%) !important;
+}
+
+/* Panel táctil y logo */
+.controller.ds4 .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
     background-color: #050505 !important;
-    background-size: 55% auto !important;
+    background-size: contain !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
+}
+
+/* Botones y cruceta */
+.controller.ds4 .button,
+.controller.ds4 .dpad,
+.controller.ds4 .trigger,
+.controller.ds4 .bumper {
+    filter: grayscale(100%) brightness(180%) contrast(120%);
+}
+
+/* Joysticks oscuros */
+.controller.ds4 .stick {
+    filter: grayscale(100%) brightness(35%);
 }
