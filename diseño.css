@@ -11,18 +11,23 @@ body {
     filter: grayscale(100%) brightness(65%) !important;
 }
 
-/* Arreglo del panel táctil: elimina el cuadro negro y ajusta el tamaño */
+/* Ajusta el panel táctil a la medida real, añade borde y borra el fondo negro del JPG */
 .controller.ds4 .touchpad {
+    width: 250px !important;
+    height: 140px !important;
+    left: 285px !important; /* Ajuste para centrar en el chasis de PS5 */
+    top: 75px !important;
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-color: transparent !important;
-    background-size: 100px !important; /* Tamaño ajustado del rayo */
-    background-position: center top 40px !important; /* Lo centra en el panel */
+    background-color: black !important; /* Base negra para que funcione el borde y el blend */
+    background-size: 80px !important; /* Tamaño del rayo */
+    background-position: center !important;
     background-repeat: no-repeat !important;
-    mix-blend-mode: screen !important; /* Convierte el fondo negro del JPG en transparente */
-    border: none !important;
+    mix-blend-mode: screen !important; /* Esto hace transparente el cuadro negro del JPG */
+    border: 3px solid white !important;
+    border-radius: 12px !important;
 }
 
-/* Fuerza el color blanco puro en todos los botones y cruceta */
+/* Fuerza el blanco puro en botones y cruceta usando brillo al máximo */
 .controller.ds4 .button,
 .controller.ds4 .face,
 .controller.ds4 .dpad,
@@ -30,8 +35,7 @@ body {
 .controller.ds4 .bumper,
 .controller.ds4 .back,
 .controller.ds4 .start {
-    /* Multiplicamos el brillo para evitar que se vean grises */
-    filter: brightness(0) invert(1) brightness(1000%) contrast(1000%) !important;
+    filter: brightness(0) invert(1) brightness(200%) !important;
     opacity: 1 !important; 
 }
 
