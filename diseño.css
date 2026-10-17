@@ -6,41 +6,41 @@ body {
     overflow: hidden;
 }
 
-/* Oscurece la carcasa del mando */
-.controller {
-    filter: grayscale(100%) brightness(65%) !important;
+/* Oscurece el mando base */
+.ds4 {
+    filter: grayscale(100%) brightness(70%) !important;
 }
 
-/* Forzamos la posición y tamaño exacto del panel táctil para que no se descoloque */
-.controller .touchpad {
+/* Panel táctil: posicionado sobre el touchpad real del mando */
+.ds4 .touchpad {
     position: absolute !important;
-    width: 340px !important;
-    height: 205px !important;
-    left: 430px !important; 
-    top: 100px !important;
-    background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-color: transparent !important;
-    background-size: 80px !important; /* Tamaño del rayo */
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    mix-blend-mode: screen !important; /* Borra el fondo negro del JPG */
-    border: 3px solid white !important;
-    border-radius: 15px !important;
+    left: 343px !important;
+    top: 230px !important;
+    width: 439px !important;
+    height: 228px !important;
     box-sizing: border-box !important;
+
+    background-color: #000000 !important;
+    background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
+    background-size: auto 55% !important;   /* tamaño del rayo */
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+
+    border: 3px solid white !important;
+    border-radius: 14px 14px 40px 40px !important;
 }
 
-/* Blanquea los botones y flechas manteniendo los iconos interiores visibles */
-.controller .button,
-.controller .face,
-.controller .dpad,
-.controller .trigger,
-.controller .bumper,
-.controller .back,
-.controller .start {
-    filter: grayscale(100%) brightness(500%) contrast(200%) !important;
+/* Botones: se vuelven claros pero conservan los iconos */
+.ds4 .button,
+.ds4 .face,
+.ds4 .trigger,
+.ds4 .bumper,
+.ds4 .back,
+.ds4 .start {
+    filter: invert(1) grayscale(100%) contrast(130%) !important;
 }
 
-/* Mantiene los joysticks oscuros */
-.controller .stick {
+/* Joysticks oscuros */
+.ds4 .stick {
     filter: grayscale(100%) brightness(35%) !important;
 }
