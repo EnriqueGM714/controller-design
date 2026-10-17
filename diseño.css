@@ -12,13 +12,13 @@ body {
     filter: grayscale(100%) brightness(65%) !important;
 }
 
-/* Panel táctil y logo */
 .controller.ds4 .touchpad {
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
     background-color: #050505 !important;
-    background-size: contain !important;
+    background-size: 18% auto !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
+    border: none !important;
 }
 
 /* Botones y cruceta */
