@@ -38,7 +38,7 @@ body {
     clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
 }
 
-/* Capa 2: tu imagen, centrada, con bordes difuminados y siempre dentro del panel */
+/* Capa 2: tu imagen, sin el resplandor gris, centrada y siempre dentro del panel */
 .ds4 .touchpad::after {
     content: "";
     position: absolute;
@@ -47,12 +47,13 @@ body {
     right: 4px;
     bottom: 4px;
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg");
-    background-size: auto 170%;          /* tamaño del rayo: sube/baja este valor */
+    background-size: auto 150%;                  /* tamaño del rayo: sube/baja este valor */
     background-position: center center;
     background-repeat: no-repeat;
-    mix-blend-mode: screen;              /* el negro de la imagen se funde con el panel */
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%);
-    mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%);
+    filter: brightness(0.75) contrast(2.2);      /* aplasta el halo gris a negro puro */
+    mix-blend-mode: screen;                      /* el negro se funde con el panel */
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 50%, transparent 80%);
+    mask-image: radial-gradient(ellipse at center, #000 50%, transparent 80%);
     clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
 }
 
@@ -67,17 +68,15 @@ body {
     background-image: none !important;
     border-radius: 50% !important;
     filter: none !important;
-    box-shadow: 0 0 0 2px #3a3a3a !important;   /* aro gris para distinguirlos del cuerpo negro */
+    box-shadow: 0 0 0 2px #3a3a3a !important;
 }
 
-/* Al pulsar: botón blanco */
 .ds4 .button.pressed {
     background: #ffffff !important;
     background-image: none !important;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7) !important;
 }
 
-/* Capa del símbolo, con brillo */
 .ds4 .button::after {
     content: "";
     position: absolute;
@@ -91,7 +90,6 @@ body {
     filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 7px rgba(255, 255, 255, 0.8));
 }
 
-/* Al pulsar, el símbolo pasa a negro y pierde el brillo */
 .ds4 .button.pressed::after {
     filter: invert(1);
 }
@@ -113,12 +111,85 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 18 L84 76 H16 Z' fill='none' stroke='%23fff' stroke-width='9' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-/* ============ CRUCETA (blanca) ============ */
+/* ============ CRUCETA (negra con aro y flecha blanca brillante) ============ */
+/* La pieza entera es el aro (gris), igual que los botones */
 .ds4 .face {
-    filter: brightness(0) invert(1) !important;
+    background: #3a3a3a !important;
+    background-image: none !important;
+    filter: none !important;
 }
-.ds4 .face.pressed {
-    filter: brightness(0) invert(0.55) !important;
+
+/* Interior negro */
+.ds4 .face::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: #000000;
+    clip-path: var(--shape);
+}
+
+/* Flecha blanca con brillo */
+.ds4 .face::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    filter: drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+/* Al pulsar: pieza blanca y flecha negra */
+.ds4 .face.pressed::before {
+    background: #ffffff;
+}
+.ds4 .face.pressed::after {
+    filter: invert(1);
+}
+
+/* Formas de cada dirección */
+.ds4 .face.up {
+    --shape: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+    border-radius: 8px 8px 0 0;
+    clip-path: var(--shape);
+}
+.ds4 .face.down {
+    --shape: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%);
+    border-radius: 0 0 8px 8px;
+    clip-path: var(--shape);
+}
+.ds4 .face.left {
+    --shape: polygon(0 0, 62% 0, 100% 50%, 62% 100%, 0 100%);
+    border-radius: 8px 0 0 8px;
+    clip-path: var(--shape);
+}
+.ds4 .face.right {
+    --shape: polygon(38% 0, 100% 0, 100% 100%, 38% 100%, 0 50%);
+    border-radius: 0 8px 8px 0;
+    clip-path: var(--shape);
+}
+
+/* Flechas */
+.ds4 .face.up::after {
+    background-position: 50% 35%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 20 L84 74 H16 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.ds4 .face.down::after {
+    background-position: 50% 65%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 80 L84 26 H16 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.ds4 .face.left::after {
+    background-position: 35% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 50 L74 16 V84 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.ds4 .face.right::after {
+    background-position: 65% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M80 50 L26 16 V84 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 /* ============ GATILLOS, BUMPERS, CREATE Y OPTIONS ============ */
