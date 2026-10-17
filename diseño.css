@@ -6,55 +6,41 @@ body {
     overflow: hidden;
 }
 
-/* Oscurecemos la carcasa general del mando de fondo */
+/* Oscurece la carcasa del mando */
 .controller {
     filter: grayscale(100%) brightness(65%) !important;
 }
 
-/* 
- * ARREGLO DEL PANEL TÁCTIL (Touchpad)
- * Al quitarle las coordenadas fijas (left/top/width/height), vuelve a su sitio natural de PS5.
- * Usamos mix-blend-mode: screen para borrar el cuadro negro y dejar el rayo visible.
- */
+/* Forzamos la posición y tamaño exacto del panel táctil para que no se descoloque */
 .controller .touchpad {
+    position: absolute !important;
+    width: 340px !important;
+    height: 205px !important;
+    left: 430px !important; 
+    top: 100px !important;
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-color: #000000 !important; /* Base negra obligatoria para que el 'screen' borre el fondo */
-    background-size: 80px !important;     /* Tamaño ajustado del rayo de tormenta */
+    background-color: transparent !important;
+    background-size: 80px !important; /* Tamaño del rayo */
     background-position: center !important;
     background-repeat: no-repeat !important;
-    mix-blend-mode: screen !important;    /* Vuelve transparente el fondo del JPG */
-    
-    /* Creamos el borde blanco al ras de la propia forma de PS5 sin descolocarlo */
-    border: 3px solid #ffffff !important;
-    border-radius: 12px !important;
+    mix-blend-mode: screen !important; /* Borra el fondo negro del JPG */
+    border: 3px solid white !important;
+    border-radius: 15px !important;
     box-sizing: border-box !important;
 }
 
-/* 
- * BOTONES BLANCOS DE ALTO CONTRASTE Y SÍMBOLOS VISIBLES
- * Aplicamos aislamiento de filtros para que no queden grises o borrosos.
- */
+/* Blanquea los botones y flechas manteniendo los iconos interiores visibles */
 .controller .button,
 .controller .face,
 .controller .dpad,
 .controller .trigger,
 .controller .bumper,
 .controller .back,
-.controller .start,
-.controller .meta {
-    /* brightness(0) los hace negros, invert(1) los pasa a blanco puro respetando bordes e interiores */
-    filter: brightness(0) invert(1) !important;
-    opacity: 1 !important;
+.controller .start {
+    filter: grayscale(100%) brightness(500%) contrast(200%) !important;
 }
 
-/* Fuerza que los pequeños símbolos o texturas dentro de los botones de PS5 mantengan su visibilidad */
-.controller .button *,
-.controller .face * {
-    filter: none !important;
-    opacity: 1 !important;
-}
-
-/* Joysticks oscuros tradicionales */
+/* Mantiene los joysticks oscuros */
 .controller .stick {
-    filter: grayscale(100%) brightness(30%) !important;
+    filter: grayscale(100%) brightness(35%) !important;
 }
