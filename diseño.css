@@ -6,37 +6,44 @@ body {
     overflow: hidden;
 }
 
-/* Mando base (sin brightness, para que los botones sean blanco puro) */
+/* Mando base: solo gris, sin bajar brillo (así los botones salen blanco puro) */
 .ds4 {
     filter: grayscale(100%) !important;
 }
 
 /* ============ PANEL TÁCTIL ============ */
-/* Forma de trapecio igual a la del touchpad real, con borde blanco y rayo centrado */
+/* Caja exterior = borde blanco */
 .ds4 .touchpad {
     position: absolute !important;
-    left: 434px !important;
-    top: 138px !important;
-    width: 322px !important;
-    height: 172px !important;
+    left: 432px !important;
+    top: 134px !important;
+    width: 334px !important;
+    height: 187px !important;
     box-sizing: border-box !important;
+    background: #ffffff !important;
     border: none !important;
-    clip-path: polygon(1% 0, 99% 0, 85% 100%, 15% 100%) !important;
-
-    background-color: #000000 !important;
-    background-image:
-        /* borde blanco */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpolygon points='1,0 99,0 85,100 15,100' fill='none' stroke='white' stroke-width='6' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"),
-        /* tu rayo */
-        url("https://i.imgur.com/qZ5mlDN.jpeg") !important;
-    background-size: 100% 100%, auto 130% !important;   /* 2º valor = tamaño del rayo */
-    background-position: center, center !important;
-    background-repeat: no-repeat, no-repeat !important;
+    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%) !important;
 }
 
-/* Al pulsar el panel, se aclara un poco */
-.ds4 .touchpad.pressed {
-    filter: invert(0.3) !important;
+/* Capa interior = fondo negro + tu rayo centrado */
+.ds4 .touchpad::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background-color: #000000;
+    background-image: url("https://i.imgur.com/qZ5mlDN.jpeg");
+    background-size: auto 200%;      /* tamaño del rayo */
+    background-position: center center;
+    background-repeat: no-repeat;
+    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
+}
+
+/* Al pulsar el panel, el fondo se aclara */
+.ds4 .touchpad.pressed::before {
+    background-color: #2b2b2b;
 }
 
 /* ============ BOTONES DE CARA (blanco fuerte) ============ */
@@ -48,7 +55,6 @@ body {
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
 }
 
-/* Al pulsar: se apagan a gris */
 .ds4 .button.pressed {
     background: #8c8c8c !important;
     background-image: none !important;
@@ -94,7 +100,7 @@ body {
 }
 
 /* ============ GATILLOS, BUMPERS, CREATE Y OPTIONS ============ */
-/* Se iluminan en blanco puro cuando los pulsas */
+/* Invisibles en reposo; se iluminan en blanco al pulsarlos */
 .ds4 .trigger,
 .ds4 .bumper,
 .ds4 .back,
