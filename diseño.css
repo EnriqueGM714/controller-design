@@ -6,7 +6,7 @@ body {
     overflow: hidden;
 }
 
-/* Mando base: solo gris, sin bajar brillo (así los botones salen blanco puro) */
+/* Mando base */
 .ds4 {
     filter: grayscale(100%) !important;
 }
@@ -16,16 +16,17 @@ body {
 .ds4 .touchpad {
     position: absolute !important;
     left: 432px !important;
-    top: 134px !important;
+    top: 132px !important;
     width: 334px !important;
-    height: 187px !important;
+    height: 189px !important;
     box-sizing: border-box !important;
     background: #ffffff !important;
     border: none !important;
+    overflow: hidden !important;
     clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%) !important;
 }
 
-/* Capa interior = fondo negro + tu rayo centrado */
+/* Capa 1: fondo negro interior */
 .ds4 .touchpad::before {
     content: "";
     position: absolute;
@@ -34,10 +35,24 @@ body {
     right: 4px;
     bottom: 4px;
     background-color: #000000;
+    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
+}
+
+/* Capa 2: tu imagen, centrada, con bordes difuminados y siempre dentro del panel */
+.ds4 .touchpad::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg");
-    background-size: auto 200%;      /* tamaño del rayo */
+    background-size: auto 170%;          /* tamaño del rayo: sube/baja este valor */
     background-position: center center;
     background-repeat: no-repeat;
+    mix-blend-mode: screen;              /* el negro de la imagen se funde con el panel */
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%);
     clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
 }
 
@@ -52,10 +67,10 @@ body {
     background-image: none !important;
     border-radius: 50% !important;
     filter: none !important;
-    box-shadow: 0 0 0 2px #3a3a3a !important;   /* aro gris para que se vea el botón sobre el cuerpo negro */
+    box-shadow: 0 0 0 2px #3a3a3a !important;   /* aro gris para distinguirlos del cuerpo negro */
 }
 
-/* Al pulsar: el botón se vuelve blanco y el símbolo negro */
+/* Al pulsar: botón blanco */
 .ds4 .button.pressed {
     background: #ffffff !important;
     background-image: none !important;
@@ -76,7 +91,7 @@ body {
     filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 7px rgba(255, 255, 255, 0.8));
 }
 
-/* Al pulsar, el símbolo se invierte a negro y pierde el brillo */
+/* Al pulsar, el símbolo pasa a negro y pierde el brillo */
 .ds4 .button.pressed::after {
     filter: invert(1);
 }
@@ -97,7 +112,6 @@ body {
 .ds4 .y::after {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 18 L84 76 H16 Z' fill='none' stroke='%23fff' stroke-width='9' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
-
 
 /* ============ CRUCETA (blanca) ============ */
 .ds4 .face {
