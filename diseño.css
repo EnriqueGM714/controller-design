@@ -161,14 +161,32 @@ body {
 }
 
 /* ============ JOYSTICKS ============ */
-/* Reposo: oscuros con aro sutil */
+/* Reposo: joystick oscuro con silueta blanca */
 .ds4 .stick {
     border-radius: 50%;
-    box-shadow: 0 0 0 3px #8a8a8a;
-    filter: grayscale(100%) brightness(35%) !important;
+    filter: none !important;                       /* el filtro oscurecía también el aro */
+    outline: 2px solid #ffffff;                    /* silueta blanca */
+    outline-offset: 5px;                           /* separación del aro respecto al joystick */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* brillo suave */
 }
-/* Pulsado (L3/R3): aro blanco brillante */
+
+/* Capa que oscurece el joystick (sustituye al brightness de antes) */
+.ds4 .stick::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.65);
+}
+
+/* Pulsado (L3/R3): aro más grueso, brillo fuerte y joystick más claro */
 .ds4 .stick.pressed {
-    box-shadow: 0 0 0 2px #ffffff, 0 0 12px rgba(255, 255, 255, 0.6);
-    filter: none !important;
+    outline-width: 3px;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.85);
+}
+.ds4 .stick.pressed::after {
+    background: rgba(0, 0, 0, 0.2);
 }
