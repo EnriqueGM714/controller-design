@@ -9,57 +9,70 @@ body {
 /* Mando base */
 .ds4 {
     filter: grayscale(100%) !important;
+    /* Sombra suave bajo el mando (opcional, quita las // y usa esta línea):
+       filter: grayscale(100%) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5)) !important; */
 }
 
 /* ============ PANEL TÁCTIL ============ */
-/* Caja exterior = borde blanco */
+/* El panel (borde blanco + fondo negro) es un SVG de 334x189 px.
+   El rayo se recorta con una máscara con esa misma forma, así que no puede salirse. */
 .ds4 .touchpad {
+    --lightbar: rgba(255, 255, 255, 0.35);   /* color del halo; ej: rgba(80,140,255,0.6) para azul */
+    --inner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='334' height='189' viewBox='0 0 334 189'%3E%3Cpath d='M20 6H314Q320 6 318.7 11.9L283.3 177.1Q282 183 276 183H58Q52 183 50.7 177.1L15.3 11.9Q14 6 20 6Z' fill='%23000'/%3E%3C/svg%3E");
+
     position: absolute !important;
     left: 432px !important;
     top: 132px !important;
     width: 334px !important;
     height: 189px !important;
     box-sizing: border-box !important;
-    background: #ffffff !important;
     border: none !important;
-    overflow: hidden !important;
-    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%) !important;
+    clip-path: none !important;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='334' height='189' viewBox='0 0 334 189'%3E%3Cpath d='M17 2H317Q326 2 324.1 10.8L286.9 178.2Q285 187 276 187H58Q49 187 47.1 178.2L9.9 10.8Q8 2 17 2Z' fill='%23000' stroke='%23fff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 100% 100% !important;
+    filter: drop-shadow(0 0 6px var(--lightbar));
 }
 
-/* Capa 1: fondo negro interior */
+/* Capa de "pulsado": aclara el interior */
 .ds4 .touchpad::before {
     content: "";
     position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    background-color: #000000;
-    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.22);
+    opacity: 0;
+    -webkit-mask-image: var(--inner);
+    mask-image: var(--inner);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+.ds4 .touchpad.pressed::before {
+    opacity: 1;
 }
 
-/* Capa 2: tu imagen, sin el resplandor gris, centrada y siempre dentro del panel */
+/* Tu imagen: centrada y recortada con la forma interior del panel */
 .ds4 .touchpad::after {
     content: "";
     position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url("https://i.imgur.com/qZ5mlDN.jpeg");
     background-size: auto 150%;                  /* tamaño del rayo: sube/baja este valor */
     background-position: center center;
     background-repeat: no-repeat;
     filter: brightness(0.75) contrast(2.2);      /* aplasta el halo gris a negro puro */
-    mix-blend-mode: screen;                      /* el negro se funde con el panel */
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 50%, transparent 80%);
-    mask-image: radial-gradient(ellipse at center, #000 50%, transparent 80%);
-    clip-path: polygon(2% 0, 98% 0, 86% 100%, 14% 100%);
-}
-
-/* Al pulsar el panel, el fondo se aclara */
-.ds4 .touchpad.pressed::before {
-    background-color: #2b2b2b;
+    mix-blend-mode: screen;
+    -webkit-mask-image: var(--inner);
+    mask-image: var(--inner);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 
 /* ============ BOTONES DE CARA (negros con símbolo blanco brillante) ============ */
@@ -111,85 +124,31 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 18 L84 76 H16 Z' fill='none' stroke='%23fff' stroke-width='9' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-/* ============ CRUCETA (negra con aro y flecha blanca brillante) ============ */
-/* La pieza entera es el aro (gris), igual que los botones */
+/* ============ CRUCETA (SVG: negra, aro gris uniforme, flecha blanca brillante) ============ */
 .ds4 .face {
-    background: #3a3a3a !important;
-    background-image: none !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
     filter: none !important;
 }
 
-/* Interior negro */
-.ds4 .face::before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    background: #000000;
-    clip-path: var(--shape);
+/* Al pulsar: se invierte (pieza blanca, flecha negra) y brilla */
+.ds4 .face.pressed {
+    filter: invert(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)) !important;
 }
 
-/* Flecha blanca con brillo */
-.ds4 .face::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: 14px 14px;
-    filter: drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
-}
-
-/* Al pulsar: pieza blanca y flecha negra */
-.ds4 .face.pressed::before {
-    background: #ffffff;
-}
-.ds4 .face.pressed::after {
-    filter: invert(1);
-}
-
-/* Formas de cada dirección */
 .ds4 .face.up {
-    --shape: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
-    border-radius: 8px 8px 0 0;
-    clip-path: var(--shape);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='37' height='52' viewBox='0 0 37 52'%3E%3Cdefs%3E%3Cfilter id='g' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M5 1H32Q36 1 36 5V34L18.5 51L1 34V5Q1 1 5 1Z' fill='%23000' stroke='%233a3a3a' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M18.5 12L25.5 23H11.5Z' fill='%23fff' filter='url(%23g)'/%3E%3Cpath d='M18.5 12L25.5 23H11.5Z' fill='%23fff'/%3E%3C/svg%3E") !important;
 }
 .ds4 .face.down {
-    --shape: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%);
-    border-radius: 0 0 8px 8px;
-    clip-path: var(--shape);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='37' height='52' viewBox='0 0 37 52'%3E%3Cdefs%3E%3Cfilter id='g' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M18.5 1L36 18V47Q36 51 32 51H5Q1 51 1 47V18Z' fill='%23000' stroke='%233a3a3a' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M18.5 40L25.5 29H11.5Z' fill='%23fff' filter='url(%23g)'/%3E%3Cpath d='M18.5 40L25.5 29H11.5Z' fill='%23fff'/%3E%3C/svg%3E") !important;
 }
 .ds4 .face.left {
-    --shape: polygon(0 0, 62% 0, 100% 50%, 62% 100%, 0 100%);
-    border-radius: 8px 0 0 8px;
-    clip-path: var(--shape);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='40' viewBox='0 0 52 40'%3E%3Cdefs%3E%3Cfilter id='g' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M5 1H31L51 20L31 39H5Q1 39 1 35V5Q1 1 5 1Z' fill='%23000' stroke='%233a3a3a' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M10 20L20 13V27Z' fill='%23fff' filter='url(%23g)'/%3E%3Cpath d='M10 20L20 13V27Z' fill='%23fff'/%3E%3C/svg%3E") !important;
 }
 .ds4 .face.right {
-    --shape: polygon(38% 0, 100% 0, 100% 100%, 38% 100%, 0 50%);
-    border-radius: 0 8px 8px 0;
-    clip-path: var(--shape);
-}
-
-/* Flechas */
-.ds4 .face.up::after {
-    background-position: 50% 35%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 20 L84 74 H16 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-.ds4 .face.down::after {
-    background-position: 50% 65%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 80 L84 26 H16 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-.ds4 .face.left::after {
-    background-position: 35% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 50 L74 16 V84 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-.ds4 .face.right::after {
-    background-position: 65% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M80 50 L26 16 V84 Z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='40' viewBox='0 0 52 40'%3E%3Cdefs%3E%3Cfilter id='g' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M47 1H21L1 20L21 39H47Q51 39 51 35V5Q51 1 47 1Z' fill='%23000' stroke='%233a3a3a' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M42 20L32 13V27Z' fill='%23fff' filter='url(%23g)'/%3E%3Cpath d='M42 20L32 13V27Z' fill='%23fff'/%3E%3C/svg%3E") !important;
 }
 
 /* ============ GATILLOS, BUMPERS, CREATE Y OPTIONS ============ */
@@ -202,6 +161,14 @@ body {
 }
 
 /* ============ JOYSTICKS ============ */
+/* Reposo: oscuros con aro sutil */
 .ds4 .stick {
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #8a8a8a;
     filter: grayscale(100%) brightness(35%) !important;
+}
+/* Pulsado (L3/R3): aro blanco brillante */
+.ds4 .stick.pressed {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 12px rgba(255, 255, 255, 0.6);
+    filter: none !important;
 }
